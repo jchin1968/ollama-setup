@@ -1,0 +1,50 @@
+services:
+  ollama:
+    container_name: ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]      
+    hostname: ollama
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    networks:
+      - ollama    
+    restart: unless-stopped
+    tty: true  
+    volumes:
+      - ollama:/root/.ollama
+
+  ollama-webui:
+    container_name: ollama-webui
+    depends_on:
+      - ollama
+    environment:
+      - '/ollama/api=http://ollama:11434/api'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    image: ghcr.io/ollama-webui/ollama-webui:main
+    networks:
+      - ollama  
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - ollama-web:/app/backend/data
+
+networks:
+  ollama:
+    external: true 
+
+volumes:
+  ollama:
+    name: ollama
+    external: true
+  ollama-web:
+    name: ollama-web
+    external: true
+  
