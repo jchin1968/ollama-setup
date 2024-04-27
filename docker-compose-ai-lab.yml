@@ -1,13 +1,20 @@
 services:
   ollama:
     container_name: ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]      
     hostname: ollama
     image: ollama/ollama:latest
     ports:
       - 11434:11434
     networks:
       - ollama    
-    restart: no 
+    restart: unless-stopped
     tty: true  
     volumes:
       - ollama:/root/.ollama
@@ -25,7 +32,7 @@ services:
       - ollama  
     ports:
       - 8080:8080
-    restart: no 
+    restart: unless-stopped
     volumes:
       - ollama-web:/app/backend/data
 
