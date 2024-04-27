@@ -10,8 +10,8 @@ docker network create ollama     # Create an external network so other docker co
 
 Create an .env file and set the default docker-compose file
 ```
-COMPOSE_FILE=docker-compose-ai-lab.yml  # AI Lab - GPU enabled, auto restart 
-COMPOSE_FILE=docker-compose-rpi.yml     # Raspberry PI - no GPU, no restart 
+COMPOSE_FILE=docker-compose.ai-lab.yml  # AI Lab - GPU enabled, auto restart 
+COMPOSE_FILE=docker-compose.rpi.yml     # Raspberry PI - no GPU, no restart 
 ```
 
 # Running
