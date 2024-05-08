@@ -1,0 +1,23 @@
+services:
+  ollama:
+    container_name: ollama
+    hostname: ollama
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    networks:
+      - ollama    
+    restart: no 
+    tty: true  
+    volumes:
+      - ollama:/root/.ollama
+
+networks:
+  ollama:
+    external: true 
+
+volumes:
+  ollama:
+    name: ollama
+    external: true
+  
